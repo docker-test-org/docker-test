@@ -13,9 +13,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Generate token
+      id: token
+      uses: peter-murray/workflow-application-token-action@v3
+      with:
+        application_id: ${{ secrets.APPLICATION_ID }}
+        application_private_key: ${{ secrets.APPLICATION_PRIVATE_KEY }}
+        revoke_token: true
     - uses: actions/checkout@v4
     - name: Build the Docker image
       run: |
-        docker login --username preetvadaliya --password ${{ secrets.PAT }} ghcr.io
+        docker login --username docker-test-org --password ${{ steps.token.outputs.token }} ghcr.io
         docker build -t ghcr.io/docker-test-org/hello-world:latest .
         docker push ghcr.io/docker-test-org/hello-world:latest
