@@ -1,0 +1,26 @@
+name: "CI: create and link branch with issue"
+
+on:
+  issues:
+    types:
+      - opened
+
+permissions:
+  actions: write
+  attestations: write
+  checks: write
+  contents: write
+  id-token: write
+  issues: write
+  pull-requests: write
+  statuses: write
+
+jobs:
+  c-l-issue-branch:
+    runs-on: ubuntu-latest
+    name: Create and link branch with issue
+    steps:
+      - name: Create issue branch
+        uses: robvanderleek/create-issue-branch@main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
