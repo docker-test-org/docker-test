@@ -1,18 +1,26 @@
-name: Create Issue Branch
+name: "CI: create and link branch with issue"
+
 on:
-    issues:
-        types: [assigned]
-    issue_comment:
-        types: [created]
+  issue_comment:
+    types:
+      - created
+
+permissions:
+  actions: write
+  attestations: write
+  checks: write
+  contents: write
+  id-token: write
+  issues: write
+  pull-requests: write
+  statuses: write
 
 jobs:
-    create_issue_branch_job:
-        runs-on: ubuntu-latest
-        steps:
-        - name: Create Issue Branch
-          id: Create_Issue_Branch
-          uses: robvanderleek/create-issue-branch@1.6.2
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        - name: Echo branch name
-          run: echo ${{ steps.Create_Issue_Branch.outputs.branchName }}
+  c-l-issue-branch:
+    runs-on: ubuntu-latest
+    name: Create and link branch with issue
+    steps:
+      - name: Create issue branch
+        uses: robvanderleek/create-issue-branch@1.6.2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
