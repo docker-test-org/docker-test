@@ -1,35 +1,26 @@
-name: Write checkout instructions
+name: "CI: Create & Link Issue Branch"
 
 on:
-  pull_request:
-    branches:
-      - main
+  issue_comment:
     types:
-      - opened
+      - created
 
 permissions:
+  actions: write
+  attestations: write
+  checks: write
+  contents: write
   id-token: write
+  issues: write
   pull-requests: write
+  statuses: write
 
 jobs:
-  write-instructions:
+  c-l-issue-branch:
     runs-on: ubuntu-latest
-    name: A job to comment checkout instructions
+    name: "Job: Create & Link Issue Branch"
     steps:
-      # Checkout to repository
-      - name: Checkout
-        uses: actions/checkout@v3
-      # Comment on PR
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
+      - name: Create issue branch
+        uses: robvanderleek/create-issue-branch@1.7.0
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          message: |
-            ### :rocket: Checkout Instructions
-          
-            ``` bash
-            git fetch origin
-            git checkout ${{ github.head_ref }}
-            ```
-            
-            Happy Coding!
