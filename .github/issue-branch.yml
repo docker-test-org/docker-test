@@ -4,6 +4,8 @@ branchName: short
 autoLinkIssue: true
 autoCloseIssue: true
 defaultBranch: main
+experimental:
+  branchNameArgument: true
 commentMessage: |
   ### :rocket: Checkout Instructions
 
